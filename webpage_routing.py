@@ -51,14 +51,8 @@ if len(collections) > 0:
 else:
     print("✅ No new collections to ingest, skipping loop.")   
 
-
+# Injection of website completed
 
 
 
     
-# vector_store.add_documents(split_docs)
-# print("Injection Done")    
-    
-
-
-# print(docs[0])

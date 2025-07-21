@@ -47,7 +47,7 @@ if len(collections) > 0:
             )
             print(f"{page} is indexed")
 
-        print(f"{collection} DB created and populated 🗂️")
+        print(f"{collection} DB created and populated ")
 else:
     print("✅ No new collections to ingest, skipping loop.")   
 

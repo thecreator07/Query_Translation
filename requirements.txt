@@ -20,9 +20,12 @@ greenlet==3.2.3
 grpcio==1.73.1
 grpcio-status==1.73.1
 h11==0.16.0
+h2==4.2.0
+hpack==4.1.0
 httpcore==1.0.9
 httpx==0.28.1
 httpx-sse==0.4.1
+hyperframe==6.1.0
 idna==3.10
 jiter==0.10.0
 jsonpatch==1.33
@@ -32,6 +35,7 @@ langchain-community==0.3.27
 langchain-core==0.3.68
 langchain-google-genai==2.1.7
 langchain-openai==0.3.27
+langchain-qdrant==0.2.0
 langchain-text-splitters==0.3.8
 langsmith==0.4.4
 marshmallow==3.26.1
@@ -41,6 +45,7 @@ numpy==2.3.1
 openai==1.93.3
 orjson==3.10.18
 packaging==24.2
+portalocker==2.10.1
 propcache==0.3.2
 proto-plus==1.26.1
 protobuf==6.31.1
@@ -51,7 +56,9 @@ pydantic-settings==2.10.1
 pydantic_core==2.33.2
 pypdf==5.7.0
 python-dotenv==1.1.1
+pywin32==310
 PyYAML==6.0.2
+qdrant-client==1.14.3
 regex==2024.11.6
 requests==2.32.4
 requests-toolbelt==1.0.0

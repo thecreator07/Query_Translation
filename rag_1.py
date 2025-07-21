@@ -24,7 +24,7 @@ embedder=GoogleGenerativeAIEmbeddings(model="models/embedding-001",google_api_ke
 #     collection_name="rag_1",
 #     embedding=embedder
 # )
-
+    
 # vector_store.add_documents(split_docs)
 # print("Injection Done")
 # AstraDb
@@ -63,4 +63,4 @@ chat=client.chat.completions.create(
     ]
 )
 
-# print("Answer:", chat.choices[0].message.content)
+print("Answer:", chat.choices[0].message.content)

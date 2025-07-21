@@ -1,4 +1,4 @@
-from uuid import uuid4
+# from uuid import uuid4
 import json
 from pathlib import Path
 from annotated_types import doc
@@ -110,7 +110,7 @@ SubQuestion_SYSTEM_PROMPT=f""" You are a helpful assistant that can answer compl
     [
        {{ "question": "What is the capital of France?",
         "answer": "The capital of France is Paris."
-    }},
+       }},
         ..// Add more question-answer pairs as needed        
     ]
 """
@@ -151,7 +151,6 @@ final_query_Answer=client.chat.completions.create(
         {"role": "user", "content": search_query}
     ]
 )
-
 
 print("\nFinal Answer:", final_query_Answer.choices[0].message.content)
 

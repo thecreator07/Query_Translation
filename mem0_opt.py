@@ -30,7 +30,7 @@ config = {
             "model": "gemini-2.0-flash-001",
             "temperature": 0.2
         },
-    },
+    },    
     "graph_store": {
         "provider": "neo4j",
         "config": {

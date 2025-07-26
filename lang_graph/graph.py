@@ -78,10 +78,9 @@ def solve_coding_question(state: State):
         messages=[
             { "role": "system", "content": SYSTEM_PROMPT },
             { "role": "user", "content": user_message }
-        ]
+        ],tools=[]
     )
-    
-    
+        
     state["ai_message"] = result.choices[0].message.parsed.answer
 
     return state
@@ -111,7 +110,6 @@ def solve_simple_question(state: State):
 
 graph_builder = StateGraph(State)
 
-
 graph_builder.add_node("detect_query", detect_query)
 graph_builder.add_node("solve_coding_question", solve_coding_question)
 graph_builder.add_node("solve_simple_question", solve_simple_question)
@@ -138,7 +136,6 @@ def call_graph():
     
     result = graph.invoke(state)
     
-
     print("Final Result", result)
 
 call_graph()

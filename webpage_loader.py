@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 from langchain_community.document_loaders import WebBaseLoader
-from langchain_community.document_loaders import WebBaseLoader
 import os
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
@@ -14,7 +13,7 @@ def get_internal_links(base_url):
         href = a['href']
         # Only keep internal links that start with the base path
         
-        links.add("https://docs.chaicode.com" + href)
+        links.add("" + href)
     return list(links)
 
 def docs_splitter(base_url):

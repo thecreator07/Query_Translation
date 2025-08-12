@@ -6,7 +6,10 @@ from langchain_qdrant import QdrantVectorStore
 from qdrant_client import QdrantClient
 from openai import OpenAI
 
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "text-to-speech-467917-67fb31ad2152.json"
+
 client = QdrantClient(url="http://localhost:6333")
+client.que
 collection_of_Db = client.get_collections().collections   
 existing = {c.name for c in collection_of_Db}
 
@@ -22,7 +25,7 @@ for url in sorted_url:
     collection_name=path_parts[2]
     collections.add(collection_name)
 
-
+print("API-KEY: ",os.environ.get("GEMINI_API_KEY"))
 # google embedder - embedding-001  
 embedder=GoogleGenerativeAIEmbeddings(model="models/embedding-001",google_api_key=os.environ.get("GEMINI_API_KEY"))
 
@@ -71,8 +74,13 @@ Query:what is the nested if else?
 Output: chai-aur-c
 """
 print(SYSTEM_PROMPT1)
+
+
+
+
+
 client=OpenAI(
-    api_key=os.environ.get("GEMINI_API_KEY"),
+    api_key='os.environ.get("GEMINI_API_KEY")',
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
 )
 collection_finding=client.chat.completions.create( model="gemini-2.0-flash",
@@ -100,7 +108,6 @@ print(relevant_chunk)
 
 
 
-
 # Generation
 relevant_context=[{"content": chunk.page_content, "source": chunk.metadata["source"]} for chunk in relevant_chunk]
 SYSTEM_PROMPT = f"""
@@ -118,6 +125,7 @@ Output:Nginx is a web server that can be used to serve static files. The documen
               url2
                 
 """
+
 print(SYSTEM_PROMPT)
 chat=client.chat.completions.create(
     model="gemini-2.0-flash",

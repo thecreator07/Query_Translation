@@ -16,6 +16,15 @@ split_docs=text_splitter.split_documents(docs)
 
 embedder=GoogleGenerativeAIEmbeddings(model="models/embedding-001",google_api_key=os.environ.get("GEMINI_API_KEY"))
 
+store= QdrantVectorStore.add_documents(
+    documents=split_docs,
+    url="http://localhost:6333",
+    collection_name="rag_1",
+    embedding=embedder
+)
+
+
+
 retriver=QdrantVectorStore.from_existing_collection(
     url="http://localhost:6333",
     collection_name="rag_1",

@@ -2,9 +2,10 @@ from langgraph.checkpoint.mongodb import MongoDBSaver
 from graph import create_chat_graph
 import json
 from langgraph.types import Command
+import os 
 
-DB_URI = 'mongodb+srv://newuse1:aman123@cluster1.hn5lfzo.mongodb.net/'
-config = {"configurable": {"thread_id": "6"}}
+DB_URI=os.environ.get('DB_URL')
+config = {"configurable": {"thread_id": "10"}}
  
 def init():
     with MongoDBSaver.from_conn_string(DB_URI) as checkpointer:

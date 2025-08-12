@@ -6,6 +6,10 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_qdrant import QdrantVectorStore
 from openai import OpenAI
+from dotenv import load_dotenv
+
+load_dotenv()
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "text-to-speech-467917-67fb31ad2152.json"
 
 pdf_path=Path(__file__).parent /"nodejs.pdf"
 loader=PyPDFLoader(file_path=pdf_path)
@@ -15,18 +19,19 @@ docs=loader.load()
 text_splitter=RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
 split_docs=text_splitter.split_documents(docs)
 
+
 embedder=GoogleGenerativeAIEmbeddings(model="models/embedding-001",google_api_key=os.environ.get("GEMINI_API_KEY"))
 
 
-# vector_store=QdrantVectorStore.from_documents(
-#     documents=[], # Start with an empty collection
-#     url="http://localhost:6333",
-#     collection_name="rag_1",
-#     embedding=embedder
-# )
+vector_store=QdrantVectorStore.from_documents(
+    documents=[], # Start with an empty collection
+    url="http://localhost:6333",
+    collection_name="rag_1",
+    embedding=embedder
+)
     
-# vector_store.add_documents(split_docs)
-# print("Injection Done")
+vector_store.add_documents(split_docs)
+print("Injection Done")
 # AstraDb
 
 retriver=QdrantVectorStore.from_existing_collection(

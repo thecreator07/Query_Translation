@@ -8,7 +8,7 @@ from langchain.chat_models import init_chat_model
 from langchain_core.tools import tool
 from langgraph.types import interrupt
 from langgraph.prebuilt import ToolNode, tools_condition
-
+from langchain.schema import SystemMessage
 load_dotenv()
 os.environ["GOOGLE_API_KEY"] =os.environ.get("GEMINI_API_KEY")
 
@@ -18,17 +18,25 @@ def human_assistance_tool(query: str):
     human_response = interrupt({ "query": query }) # Graph will exit out after saving data in DB
     return human_response["data"] # resume with the data
 
-tools = [human_assistance_tool]
+@tool
+def command_run(cmd:str):
+    """Takes a command line prompt and executes it on the user's machine and return output of the command.
+    Example: command_run(cmd="ls") where ls is the command to list the file
+    """
+    result=os.system(command=cmd)
+    return result
+
+tools = [human_assistance_tool,command_run]
 
 llm = init_chat_model(model_provider="openai", model="gpt-4.1")
 llm_with_tools = llm.bind_tools(tools=tools)
-
 
 class State(TypedDict):
     messages: Annotated[list, add_messages]
 
 def chatbot(state: State):
-    message = llm_with_tools.invoke(state["messages"])
+    system_prompt=SystemMessage(content="Your name is AMAN. you are an ai assistant who is expert in q/a")
+    message = llm_with_tools.invoke([system_prompt]+state["messages"])
     assert len(message.tool_calls) <= 1
     return {"messages": [message]}
 
@@ -45,7 +53,8 @@ graph_builder.add_conditional_edges(
     "chatbot",
     tools_condition,
 )
-graph_builder.add_edge("tools", "chatbot") # We missed this
+
+graph_builder.add_edge("tools", "chatbot") 
 
 graph_builder.add_edge("chatbot", END)
 

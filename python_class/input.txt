@@ -1,0 +1,4 @@
+In large-scale ETL with millions of records, I would avoid using deepcopy() 
+everywhere because it’s slow and memory-heavy. Instead, I’d design my pipeline with
+ immutability in mind — functions that build fresh dicts/lists, streaming data with generators, 
+ and copying only the parts that truly need isolation. That way, I balance correctness with performance.”

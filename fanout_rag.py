@@ -5,6 +5,10 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_qdrant import QdrantVectorStore
 from openai import OpenAI
+from dotenv import load_dotenv
+
+load_dotenv()
+os.environ["GOOGLE_API_KEY"] =os.environ.get("GEMINI_API_KEY")
 
 pdf_path=Path(__file__).parent /"nodejs.pdf"
 loader=PyPDFLoader(file_path=pdf_path)
@@ -14,16 +18,17 @@ docs=loader.load()
 text_splitter=RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
 split_docs=text_splitter.split_documents(docs)
 
-embedder=GoogleGenerativeAIEmbeddings(model="models/embedding-001",google_api_key=os.environ.get("GEMINI_API_KEY"))
+embedder=GoogleGenerativeAIEmbeddings(model="models/embedding-001",google_api_key=os.environ.get("GOOGLE_API_KEY"))
 
-store= QdrantVectorStore.add_documents(
-    documents=split_docs,
+# create the vector store instance first
+store = QdrantVectorStore(
     url="http://localhost:6333",
     collection_name="rag_1",
     embedding=embedder
 )
 
-
+# now add the documents
+store.add_documents(split_docs)
 
 retriver=QdrantVectorStore.from_existing_collection(
     url="http://localhost:6333",
@@ -35,7 +40,6 @@ client=OpenAI(
     api_key=os.environ.get("GEMINI_API_KEY"),
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
 )
-
 
 search_query=input("Enter your question: ")
 FanOut_SYSTEM_PROMPT="""

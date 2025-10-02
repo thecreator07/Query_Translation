@@ -22,6 +22,7 @@ class CodingAIResponse(BaseModel):
 #     api_key=os.environ.get("GEMINI_API_KEY"),
 #     base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
 #     ))
+
 client=openai.OpenAI(
     api_key=os.environ.get("GEMINI_API_KEY"),
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/"

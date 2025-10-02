@@ -1,5 +1,10 @@
 from openai import OpenAI
 import os
+from dotenv import load_dotenv
+
+
+load_dotenv() 
+
 
 
 
@@ -29,4 +34,5 @@ chat=client.chat.completions.create(
         {"role": "user", "content": user_query}
     ]
 )
+print(type(chat))
 print("Fianl Model:",chat.choices[0].message.content)

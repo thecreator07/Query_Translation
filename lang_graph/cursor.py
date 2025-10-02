@@ -16,7 +16,6 @@ def run_command(command):
     result = os.system(command=command)
     return result
 
-
 def get_weather(city: str):
     # TODO!: Do an actual API Call
     print("🔨 Tool Called: get_weather", city)

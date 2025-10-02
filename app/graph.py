@@ -3,14 +3,30 @@ from typing_extensions import TypedDict
 from langgraph.graph.message import add_messages
 from langgraph.graph import StateGraph, START, END
 import os
+
+import asyncio
 from dotenv import load_dotenv
 from langchain.chat_models import init_chat_model
 from langchain_core.tools import tool
 from langgraph.types import interrupt
 from langgraph.prebuilt import ToolNode, tools_condition
 from langchain.schema import SystemMessage
+from langchain_mcp_adapters.client import MultiServerMCPClient
 load_dotenv()
 os.environ["GOOGLE_API_KEY"] =os.environ.get("GEMINI_API_KEY")
+
+async def gettools():
+    client = MultiServerMCPClient(
+    {
+        "all": {
+            "transport": "streamable_http",
+            "url": "https://mcp-server-97sz.onrender.com/mcp/"
+        },
+    }
+    )
+    tools = await client.get_tools()
+    return tools
+
 
 @tool()
 def human_assistance_tool(query: str):
@@ -25,9 +41,10 @@ def command_run(cmd:str):
     """
     result=os.system(command=cmd)
     return result
-
-tools = [human_assistance_tool,command_run]
-
+mcptool = asyncio.run(gettools())
+# print(mcptool)
+tools = mcptool+[human_assistance_tool,command_run]
+print(tools)
 llm = init_chat_model(model_provider="openai", model="gpt-4.1")
 llm_with_tools = llm.bind_tools(tools=tools)
 

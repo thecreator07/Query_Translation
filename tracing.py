@@ -1,34 +1,34 @@
 import json
 import requests
 from dotenv import load_dotenv
-# from openai import OpenAI
+from openai import OpenAI
 import os
-# from langsmith.wrappers import wrap_openai
-# from langsmith import traceable
-from langfuse.openai import openai
-from langfuse import observe
+from langsmith.wrappers import wrap_openai
+from langsmith import traceable
+# from langfuse.openai import openai
+# from langfuse import observe
 
 load_dotenv()
 
-# openai_client = wrap_openai(OpenAI(
-#     api_key=os.environ.get("GEMINI_API_KEY"),
-#     base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
-#     ))
-
-client=openai.OpenAI(
+client = wrap_openai(OpenAI(
     api_key=os.environ.get("GEMINI_API_KEY"),
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
-    )
+    ))
+
+# client=openai.OpenAI(
+#     api_key=os.environ.get("GEMINI_API_KEY"),
+#     base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
+#     )
 
 # @traceable
-@observe()
+# @observe()
 def run_command(command):
     result = os.system(command=command)
     return result
 
 
 # @traceable
-@observe()
+# @observe()
 def get_weather(city: str):
     # TODO!: Do an actual API Call
     print("🔨 Tool Called: get_weather", city)
@@ -41,7 +41,7 @@ def get_weather(city: str):
     return "Something went wrong"
 
 # @traceable
-@observe()
+# @observe()
 def add(x, y):
     print("🔨 Tool Called: add", x, y)
     return x + y
@@ -137,9 +137,3 @@ while True:
         if parsed_output.get("step") == "output":
             print(f"🤖: {parsed_output.get("content")}")
             break
-
-
-    
-
-
-

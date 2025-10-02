@@ -1,10 +1,13 @@
+import dotenv
 from mem0 import Memory
 import os
 from openai import OpenAI
 from queue import Queue
 import threading
 import time
+from dotenv import load_dotenv
 
+load_dotenv()
 config = {
     "version": "v1.1",
     "embedder": {
@@ -12,7 +15,7 @@ config = {
         "config": {
             "api_key": os.environ.get("GEMINI_API_KEY"),
             "model": "models/text-embedding-004",
-            "embedding_dims": 768  # ← Must match actual embedding output
+            "embedding_dims": 768  
         },
     },
     "vector_store": {
@@ -63,7 +66,7 @@ gemini_client=OpenAI(
     base_url="https://generativelanguage.googleapis.com/v1beta/openai/"
 )
 
-history_messages=[]
+# history_messages=[]
 def chat(message):
     mem_result=mem_client.search(query=message,user_id='p82')
     
@@ -93,7 +96,7 @@ def chat(message):
     )
     
     messages.append({"role":"assistant","content":result.choices[0].message.content})
-    memory_queue.put((messages, 'p82'))  # enqueue instead of direct add
+    memory_queue.put((messages, 'p43'))  # enqueue instead of direct add
     return result.choices[0].message.content
 
 while True:

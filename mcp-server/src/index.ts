@@ -1,10 +1,10 @@
-import express,{Request,Response} from 'express';
+import express, { Request, Response } from 'express';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { z } from 'zod';
 // import { ErrorCode } from '@modelcontextprotocol/sdk/types';
 
-function Server() {
+function Server():McpServer {
     // Create an MCP server with a simple echo tool
     const server = new McpServer({ name: 'Demo', version: '1.0.0' });
 
